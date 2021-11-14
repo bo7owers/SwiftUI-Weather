@@ -32,67 +32,11 @@ struct ContentView: View {
                 }
                 Spacer()
                 HStack (alignment: .bottom, spacing: 20){
-                    VStack {
-                        Text("MON")
-                            .font(.system(size: 22, weight: .light, design: .rounded))
-                        Image(systemName: "cloud.drizzle.fill")
-                            .renderingMode(.original)
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 35, height: 35, alignment: .top)
-                        Text("8°")
-                            .font(.system(size: 22, weight: .light, design: .rounded))
-                        Spacer()
-                    }
-                    VStack{
-                        Text("TUE")
-                            .font(.system(size: 22, weight: .light, design: .rounded))
-                        Image(systemName: "cloud.snow.fill")
-                            .renderingMode(.original)
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 35, height: 35, alignment: .top)
-                        Text("4°")
-                            .font(.system(size: 22, weight: .light, design: .rounded))
-                        Spacer()
-                    }
-                    VStack{
-                        Text("WED")
-                            .font(.system(size: 22, weight: .light, design: .rounded))
-                        Image(systemName: "cloud.sun.fill")
-                            .renderingMode(.original)
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 35, height: 35, alignment: .top)
-                        Text("2°")
-                            .font(.system(size: 22, weight: .light, design: .rounded))
-                        Spacer()
-                    }
-                    VStack{
-                        Text("THU")
-                            .font(.system(size: 22, weight: .light, design: .rounded))
-                        Image(systemName: "cloud.sun.fill")
-                            .renderingMode(.original)
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 35, height: 35, alignment: .top)
-                        Text("0°")
-                            .font(.system(size: 22, weight: .light, design: .rounded))
-                        Spacer()
-                    }
-//                    Friday
-                    VStack{
-                        Text("FRI")
-                            .font(.system(size: 22, weight: .light, design: .rounded))
-                        Image(systemName: "wind.snow")
-                            .renderingMode(.original)
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 35, height: 35, alignment: .top)
-                        Text("-6°")
-                            .font(.system(size: 22, weight: .light, design: .rounded))
-                        Spacer()
-                    }
+                    WeatherDayView(dayOfWeek: "MON", imageDay: "cloud.sun.fill", temperature: 3)
+                    WeatherDayView(dayOfWeek: "TUE", imageDay: "cloud.snow.fill", temperature: 4)
+                    WeatherDayView(dayOfWeek: "WED", imageDay: "cloud.sun.fill", temperature: 2)
+                    WeatherDayView(dayOfWeek: "THU", imageDay: "cloud.sun.fill", temperature: 0)
+                   WeatherDayView(dayOfWeek: "FRI", imageDay: "wind.snow", temperature: -6)
                 }
                
             }
@@ -104,5 +48,27 @@ struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
 .previewInterfaceOrientation(.portrait)
+    }
+}
+
+struct WeatherDayView: View {
+    var dayOfWeek: String
+    var imageDay: String
+    var temperature: Int
+    
+    var body: some View {
+        VStack {
+            Text(dayOfWeek)
+                .font(.system(size: 22, weight: .light, design: .rounded))
+            Image(systemName: imageDay)
+                .renderingMode(.original)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 35, height: 35, alignment: .top)
+//            Interpolation
+            Text("\(temperature)°")
+                .font(.system(size: 22, weight: .light, design: .rounded))
+            Spacer()
+        }
     }
 }

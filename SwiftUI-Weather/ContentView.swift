@@ -14,15 +14,12 @@ struct ContentView: View {
             VStack{
                 MainTextView(mainText: "Ottawa, ON")
                 VStack(spacing: 5) {
-                    Image(systemName: "sun.and.horizon.fill")
-                        .renderingMode(.original)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 180, height: 180, alignment: .center)
+                    ImageView(icon: "sun.and.horizon.fill")
                     
                     Text("6°")
                         .font(.system(size: 70, weight: .medium, design: .rounded))
                         .foregroundColor(.black)
+                        .frame(width: 80, height: 70, alignment: .trailing)
                 }
                 .padding(.bottom, -20)
                 HStack (alignment: .bottom, spacing: 20){
@@ -39,7 +36,7 @@ struct ContentView: View {
                     Text("Change Day Time")
                         .frame(width: 280, height: 50, alignment: .center)
                         .background(Color.white)
-                        .font(.system(size: 20, weight: .semibold, design: .monospaced))
+                        .font(.system(size: 20, weight: .semibold, design: .rounded))
                         .cornerRadius(11)
                 }
                 
@@ -96,8 +93,19 @@ struct MainTextView: View {
     
     var body: some View {
         Text(mainText)
-            .font(.system(size: 35, weight: .medium, design: .monospaced))
+            .font(.system(size: 35, weight: .medium, design: .rounded))
             .foregroundColor(.white)
             .padding(.top, 35)
+    }
+}
+
+struct ImageView: View {
+    var icon: String
+    var body: some View {
+        Image(systemName: icon)
+            .renderingMode(.original)
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .frame(width: 180, height: 180, alignment: .center)
     }
 }

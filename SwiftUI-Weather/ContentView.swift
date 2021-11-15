@@ -10,15 +10,9 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         ZStack {
-            LinearGradient(gradient: Gradient(colors: [.blue, .white]),
-                           startPoint: .topLeading, endPoint: .bottomTrailing)
-                .edgesIgnoringSafeArea(.all)
+            BgView(topColor: Color("BG_Blue"), bottomColor: Color("BG_White"))
             VStack{
-                Text("Ottawa, ON")
-                    .font(.system(size: 35, weight: .medium, design: .monospaced))
-                    .foregroundColor(.white)
-                    .padding(.top, 35)
-            
+                MainTextView(mainText: "Ottawa, ON")
                 VStack(spacing: 5) {
                     Image(systemName: "sun.and.horizon.fill")
                         .renderingMode(.original)
@@ -30,7 +24,7 @@ struct ContentView: View {
                         .font(.system(size: 70, weight: .medium, design: .rounded))
                         .foregroundColor(.black)
                 }
-                Spacer()
+                .padding(.bottom, -20)
                 HStack (alignment: .bottom, spacing: 20){
                     WeatherDayView(dayOfWeek: "MON", imageDay: "cloud.sun.fill", temperature: 3)
                     WeatherDayView(dayOfWeek: "TUE", imageDay: "cloud.snow.fill", temperature: 4)
@@ -38,6 +32,18 @@ struct ContentView: View {
                     WeatherDayView(dayOfWeek: "THU", imageDay: "cloud.sun.fill", temperature: 0)
                    WeatherDayView(dayOfWeek: "FRI", imageDay: "wind.snow", temperature: -6)
                 }
+                Button{
+//                    Action
+                    print("tapped")
+                } label: {
+                    Text("Change Day Time")
+                        .frame(width: 280, height: 50, alignment: .center)
+                        .background(Color.white)
+                        .font(.system(size: 20, weight: .semibold, design: .monospaced))
+                        .cornerRadius(11)
+                }
+                
+                Spacer()
                
             }
         }
@@ -68,7 +74,30 @@ struct WeatherDayView: View {
 //            Interpolation
             Text("\(temperature)°")
                 .font(.system(size: 22, weight: .light, design: .rounded))
-            Spacer()
-        }
+//            Spacer()
+        }.frame(height: 220)
+    }
+}
+
+struct BgView: View {
+    var topColor: Color
+    var bottomColor: Color
+    
+    
+    var body: some View {
+        LinearGradient(gradient: Gradient(colors: [topColor, bottomColor]),
+                       startPoint: .topLeading, endPoint: .bottomTrailing)
+            .edgesIgnoringSafeArea(.all)
+    }
+}
+
+struct MainTextView: View {
+    let  mainText: String
+    
+    var body: some View {
+        Text(mainText)
+            .font(.system(size: 35, weight: .medium, design: .monospaced))
+            .foregroundColor(.white)
+            .padding(.top, 35)
     }
 }

@@ -20,7 +20,7 @@ struct ContentView: View {
         ZStack {
             BgView(topColor: isNight == !true ? Color(bgBlue) : Color(drkbgWhite), bottomColor: isNight == !true ? Color(bgWhite) : Color(drkbgBlue))
             VStack{
-                MainTextView(mainText: "Ottawa, ON", foregroundColor: isNight == !true ? .white : .yellow)
+                MainTextView(mainText: "Gatineau, QC", foregroundColor: isNight == !true ? .white : .yellow)
                 CityView(iconName: isNight == !true ? "sun.and.horizon.fill" : "moon.stars.fill", degrees: 6, textColor: isNight == !true ? .black : .white)
                 HStack (alignment: .bottom, spacing: 20){
                     WeatherDayView(dayOfWeek: "MON", imageDay: "cloud.sun.fill", temperature: 3, textColorDay: isNight == !true ? .black : .white, weekdayColor: isNight == !true ? .black : .white)

@@ -8,36 +8,34 @@
 import SwiftUI
 
 struct ContentView: View {
+    let bgBlue = "BG_Blue"
+    let bgWhite = "BG_White"
+    let drkbgBlue = "gb-blue-dark"
+    let drkbgWhite = "gb-white-dark"
+    
+    @State private var isNight = false
+    
+    
     var body: some View {
         ZStack {
-            BgView(topColor: Color("BG_Blue"), bottomColor: Color("BG_White"))
+            BgView(topColor: isNight == !true ? Color(bgBlue) : Color(drkbgWhite), bottomColor: isNight == !true ? Color(bgWhite) : Color(drkbgBlue))
             VStack{
-                MainTextView(mainText: "Ottawa, ON")
-                VStack(spacing: 5) {
-                    ImageView(icon: "sun.and.horizon.fill")
-                    
-                    Text("6°")
-                        .font(.system(size: 70, weight: .medium, design: .rounded))
-                        .foregroundColor(.black)
-                        .frame(width: 80, height: 70, alignment: .trailing)
-                }
-                .padding(.bottom, -20)
+                MainTextView(mainText: "Ottawa, ON", foregroundColor: isNight == !true ? .white : .yellow)
+                CityView(iconName: isNight == !true ? "sun.and.horizon.fill" : "moon.stars.fill", degrees: 6, textColor: isNight == !true ? .black : .white)
                 HStack (alignment: .bottom, spacing: 20){
-                    WeatherDayView(dayOfWeek: "MON", imageDay: "cloud.sun.fill", temperature: 3)
-                    WeatherDayView(dayOfWeek: "TUE", imageDay: "cloud.snow.fill", temperature: 4)
-                    WeatherDayView(dayOfWeek: "WED", imageDay: "cloud.sun.fill", temperature: 2)
-                    WeatherDayView(dayOfWeek: "THU", imageDay: "cloud.sun.fill", temperature: 0)
-                   WeatherDayView(dayOfWeek: "FRI", imageDay: "wind.snow", temperature: -6)
+                    WeatherDayView(dayOfWeek: "MON", imageDay: "cloud.sun.fill", temperature: 3, textColorDay: isNight == !true ? .black : .white, weekdayColor: isNight == !true ? .black : .white)
+                    WeatherDayView(dayOfWeek: "TUE", imageDay: "cloud.snow.fill", temperature: 4, textColorDay: isNight == !true ? .black : .white, weekdayColor: isNight == !true ? .black : .white)
+                    WeatherDayView(dayOfWeek: "WED", imageDay: "cloud.sun.fill", temperature: 2, textColorDay: isNight == !true ? .black : .white, weekdayColor: isNight == !true ? .black : .white)
+                    WeatherDayView(dayOfWeek: "THU", imageDay: "cloud.sun.fill", temperature: 0, textColorDay: isNight == !true ? .black : .white, weekdayColor: isNight == !true ? .black : .white)
+                   WeatherDayView(dayOfWeek: "FRI", imageDay: "wind.snow", temperature: -6, textColorDay: isNight == !true ? .black : .white, weekdayColor: isNight == !true ? .black : .white)
                 }
                 Button{
 //                    Action
-                    print("tapped")
+                    isNight.toggle()
+                    
+                    isNight == true ? print("is Night") : print("is Day")
                 } label: {
-                    Text("Change Day Time")
-                        .frame(width: 280, height: 50, alignment: .center)
-                        .background(Color.white)
-                        .font(.system(size: 20, weight: .semibold, design: .rounded))
-                        .cornerRadius(11)
+                    WeatherButtonView(weatherLabel: "Tap here", labelColor: .white, btnColor: .indigo)
                 }
                 
                 Spacer()
@@ -58,11 +56,14 @@ struct WeatherDayView: View {
     var dayOfWeek: String
     var imageDay: String
     var temperature: Int
+    var textColorDay: Color
+    var weekdayColor: Color
     
     var body: some View {
         VStack {
             Text(dayOfWeek)
                 .font(.system(size: 22, weight: .light, design: .rounded))
+                .foregroundColor(weekdayColor)
             Image(systemName: imageDay)
                 .renderingMode(.original)
                 .resizable()
@@ -71,6 +72,7 @@ struct WeatherDayView: View {
 //            Interpolation
             Text("\(temperature)°")
                 .font(.system(size: 22, weight: .light, design: .rounded))
+                .foregroundColor(textColorDay)
 //            Spacer()
         }.frame(height: 220)
     }
@@ -90,22 +92,37 @@ struct BgView: View {
 
 struct MainTextView: View {
     let  mainText: String
+    let foregroundColor: Color
     
     var body: some View {
         Text(mainText)
             .font(.system(size: 35, weight: .medium, design: .rounded))
-            .foregroundColor(.white)
+            .foregroundColor(foregroundColor)
             .padding(.top, 35)
     }
 }
 
-struct ImageView: View {
-    var icon: String
+
+
+struct CityView: View {
+    var iconName: String
+    var degrees: Int
+    var textColor : Color
+    
     var body: some View {
-        Image(systemName: icon)
-            .renderingMode(.original)
-            .resizable()
-            .aspectRatio(contentMode: .fit)
-            .frame(width: 180, height: 180, alignment: .center)
+        VStack(spacing: 5) {
+            Image(systemName: iconName)
+                .renderingMode(.original)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 180, height: 180, alignment: .center)
+            
+            Text("\(degrees)°")
+                .font(.system(size: 70, weight: .medium, design: .rounded))
+                .foregroundColor(textColor)
+                .frame(width: 80, height: 70, alignment: .trailing)
+        }
+        .padding(.bottom, -20)
     }
 }
+
